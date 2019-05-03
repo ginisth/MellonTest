@@ -14,27 +14,28 @@ namespace MellonTest
             var token = new GetToken().CatchToken("TestUser", "ZfuzpbZ8Mo4").GetAwaiter().GetResult();
             Console.WriteLine($"Token:{token}");
 
-            //var actors = new Director(token).GetDirectorsAsync().GetAwaiter().GetResult();
+            //var actors = new Movie(token).GetMoviesAsync().GetAwaiter().GetResult();
             //foreach (var actor in actors)
             //{
-            //    Console.WriteLine(actor.id + " " + actor.name + " " + actor.birthday);
+            //    Console.WriteLine(actor.id + " " + actor.name + " " + actor.year + " " + actor.director +
+            //         " " + actor.actors[0] );
             //}
             //Console.WriteLine(actors);
-            //var actor = new Director(token).GetDirectorAsync(289).GetAwaiter().GetResult();
+            //var actor = new Movie(token).GetMovieAsync(50).GetAwaiter().GetResult();
             //Console.WriteLine(actor);
 
-            //var actor = new Director(token).
-            //    CreateDirectorAsync(new Director { name = "lak", birthday = DateTime.Now.Date.ToString("yyyy-MM-dd") }).
+            //var actor = new Movie(token).
+            //    CreateMovieAsync(new Movie { name = "lak",year=2019,director=305,actors=new List<int>() {435,440 } }).
             //    GetAwaiter().GetResult();
             //Console.WriteLine(actor);
 
-            //var actor = new Director(token).
-            //    UpdateDirectorAsync(new Director { id = 323, name = "Lus", birthday = DateTime.Now.Date.ToString("yyyy-MM-dd") })
+            //var actor = new Movie(token).
+            //    UpdateMovieAsync(new Movie {id=71, name = "lak", year = 2018, director = 305, actors = new List<int>() { 420, 440 } })
             //    .GetAwaiter().GetResult();
             //Console.WriteLine(actor);
 
-            //var actor = new Director(token).DeleteDirectorAsync(323).GetAwaiter().GetResult();
-            //Console.WriteLine(actor);
+            var actor = new Movie(token).DeleteMovieAsync(71).GetAwaiter().GetResult();
+            Console.WriteLine(actor);
             Console.ReadKey();
 
         }
