@@ -19,8 +19,6 @@ namespace MellonTest
                 Console.WriteLine(actor.Id + " " + actor.Name + " " + actor.Birthday);
             }
             Console.WriteLine(actors);
-            //
-            //
             Console.ReadKey();
 
         }
