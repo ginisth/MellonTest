@@ -18,24 +18,24 @@ namespace MellonTest
             //foreach (var actor in actors)
             //{
             //    Console.WriteLine(actor.id + " " + actor.name + " " + actor.year + " " + actor.director +
-            //         " " + actor.actors[0] );
+            //         " " + actor.actors[0]);
             //}
             //Console.WriteLine(actors);
-            //var actor = new Movie(token).GetMovieAsync(50).GetAwaiter().GetResult();
+            //var actor = new Movie(token).GetMovieAsync(00).GetAwaiter().GetResult();
             //Console.WriteLine(actor);
 
             //var actor = new Movie(token).
-            //    CreateMovieAsync(new Movie { name = "lak",year=2019,director=305,actors=new List<int>() {435,440 } }).
+            //    CreateMovieAsync(new Movie { name = "lak", year = 2019, director = 000, actors = new List<int>() { 435, 440 } }).
             //    GetAwaiter().GetResult();
             //Console.WriteLine(actor);
 
             //var actor = new Movie(token).
-            //    UpdateMovieAsync(new Movie {id=71, name = "lak", year = 2018, director = 305, actors = new List<int>() { 420, 440 } })
+            //    UpdateMovieAsync(new Movie { id = 64, name = "lak", year = 2018, director = 305, actors = new List<int>() { 000, 440 } })
             //    .GetAwaiter().GetResult();
             //Console.WriteLine(actor);
 
-            var actor = new Movie(token).DeleteMovieAsync(71).GetAwaiter().GetResult();
-            Console.WriteLine(actor);
+            //var actor = new movie(token).deletemovieasync(71).getawaiter().getresult();
+            //console.writeline(actor);
             Console.ReadKey();
 
         }

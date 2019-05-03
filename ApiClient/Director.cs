@@ -46,7 +46,7 @@ namespace ApiClient
         }
 
 
-        public async Task<string> GetDirectorAsync(int id)
+        public async Task<Director> GetDirectorAsync(int id)
         {
             string director = null;
             HttpResponseMessage response = await Client.GetAsync("directors//" + id + "//");
@@ -56,12 +56,9 @@ namespace ApiClient
             }
 
             if (director != null)
-            {
-                Director desirializedDirector = Newtonsoft.Json.JsonConvert.DeserializeObject<Director>(director);
-                return desirializedDirector.id + " " + desirializedDirector.name + " " + desirializedDirector.birthday;
-            }
-
-            return "Bad request";
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<Director>(director);
+            else
+                return null;
         }
 
 
@@ -73,15 +70,22 @@ namespace ApiClient
                 birthday = director.birthday
             };
 
-            HttpResponseMessage response = await
-                Client.PostAsJsonAsync("directors//", newDirector);
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                HttpResponseMessage response = await
+                    Client.PostAsJsonAsync("directors//", newDirector);
+                response.EnsureSuccessStatusCode();
 
-            return response.StatusCode;
+                return response.StatusCode;
+            }
+            catch (HttpRequestException)
+            {
+                return HttpStatusCode.BadRequest;
+            }
         }
 
 
-        public async Task<string> UpdateDirectorAsync(Director director)
+        public async Task<HttpStatusCode> UpdateDirectorAsync(Director director)
         {
             try
             {
@@ -89,17 +93,11 @@ namespace ApiClient
                     "directors//" + director.id + "//", director);
                 response.EnsureSuccessStatusCode();
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return $"Actor {director.name} updated";
-                }
-
-                return "Bad request";
-
+                return response.StatusCode;
             }
-            catch (HttpRequestException e)
+            catch (HttpRequestException)
             {
-                return e.Message.ToString();
+                return HttpStatusCode.BadRequest;
             }
         }
 

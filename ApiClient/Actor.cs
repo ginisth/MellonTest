@@ -47,7 +47,7 @@ namespace ApiClient
         }
 
 
-        public async Task<string> GetActorAsync(int id)
+        public async Task<Actor> GetActorAsync(int id)
         {
             string actor = null;
             HttpResponseMessage response = await Client.GetAsync("actors//" + id + "//");
@@ -57,12 +57,9 @@ namespace ApiClient
             }
 
             if (actor != null)
-            {
-                Actor desirializedActor = Newtonsoft.Json.JsonConvert.DeserializeObject<Actor>(actor);
-                return desirializedActor.id + " " + desirializedActor.name + " " + desirializedActor.birthday;
-            }
-
-            return "Bad request";
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<Actor>(actor);
+            else
+                return null;
         }
 
 
@@ -74,15 +71,22 @@ namespace ApiClient
                 birthday = actor.birthday
             };
 
-            HttpResponseMessage response = await
-                Client.PostAsJsonAsync("actors//", newActor);
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                HttpResponseMessage response = await
+                    Client.PostAsJsonAsync("actors//", newActor);
+                response.EnsureSuccessStatusCode();
 
-            return response.StatusCode;
+                return response.StatusCode;
+            }
+            catch (HttpRequestException)
+            {
+                return HttpStatusCode.BadRequest;
+            }
         }
 
 
-        public async Task<string> UpdateActorAsync(Actor actor)
+        public async Task<HttpStatusCode> UpdateActorAsync(Actor actor)
         {
             try
             {
@@ -90,17 +94,11 @@ namespace ApiClient
                     "actors//" + actor.id + "//", actor);
                 response.EnsureSuccessStatusCode();
 
-                if (response.IsSuccessStatusCode)
-                {
-                    return $"Actor {actor.name} updated";
-                }
-
-                return "Bad request";
-
+                return response.StatusCode;
             }
-            catch(HttpRequestException e)
+            catch(HttpRequestException )
             {
-                return e.Message.ToString();
+                return HttpStatusCode.BadRequest;
             }
         }
 

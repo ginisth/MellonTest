@@ -44,7 +44,7 @@ namespace ApiClient
             return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Movie>>(movies);
         }
 
-        public async Task<string> GetMovieAsync(int id)
+        public async Task<Movie> GetMovieAsync(int id)
         {
             string movie = null;
             HttpResponseMessage response = await Client.GetAsync("movies//" + id + "//");
@@ -54,13 +54,9 @@ namespace ApiClient
             }
 
             if (movie != null)
-            {
-                Movie desirializedMovie = Newtonsoft.Json.JsonConvert.DeserializeObject<Movie>(movie);
-                return desirializedMovie.id + " " + desirializedMovie.name + " " + desirializedMovie.year +
-                    " " + desirializedMovie.director + " " + desirializedMovie.actors[0];
-            }
-
-            return "Bad request";
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<Movie>(movie);
+            else
+                return null;
         }
 
         public async Task<HttpStatusCode> CreateMovieAsync(Movie movie)
@@ -73,33 +69,34 @@ namespace ApiClient
                 actors=movie.actors
             };
 
-            HttpResponseMessage response = await
-                Client.PostAsJsonAsync("movies//", newMovie);
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                HttpResponseMessage response = await
+                    Client.PostAsJsonAsync("movies//", newMovie);
+                response.EnsureSuccessStatusCode();
 
-            return response.StatusCode;
+                return response.StatusCode;
+            }
+            catch(HttpRequestException)
+            {
+               return HttpStatusCode.BadRequest;
+            }
         }
 
 
-        public async Task<string> UpdateMovieAsync(Movie movie)
+        public async Task<HttpStatusCode> UpdateMovieAsync(Movie movie)
         {
             try
             {
                 HttpResponseMessage response = await Client.PutAsJsonAsync(
                     "movies//" + movie.id + "//", movie);
                 response.EnsureSuccessStatusCode();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    return $"Actor {movie.name} updated";
-                }
-
-                return "Bad request";
-
+                
+                    return response.StatusCode;
             }
-            catch (HttpRequestException e)
+            catch (HttpRequestException)
             {
-                return e.Message.ToString();
+                return HttpStatusCode.BadRequest;
             }
         }
 
