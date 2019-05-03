@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MellonTest", "MellonTest\MellonTest.csproj", "{188B74D5-578E-4980-9877-AA035314D146}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiClient", "ApiClient\ApiClient.csproj", "{29F4D966-02CD-46B6-AC7B-EB3C2595BC5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{188B74D5-578E-4980-9877-AA035314D146}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{188B74D5-578E-4980-9877-AA035314D146}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{188B74D5-578E-4980-9877-AA035314D146}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29F4D966-02CD-46B6-AC7B-EB3C2595BC5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29F4D966-02CD-46B6-AC7B-EB3C2595BC5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29F4D966-02CD-46B6-AC7B-EB3C2595BC5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29F4D966-02CD-46B6-AC7B-EB3C2595BC5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

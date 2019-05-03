@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApiClient;
 
 namespace MellonTest
 {
@@ -10,12 +11,18 @@ namespace MellonTest
     {
         static void Main(string[] args)
         {
-            // The code provided will print ‘Hello World’ to the console.
-            // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
-            Console.WriteLine("Hello World!");
+            var token = new GetToken().CatchToken("TestUser", "ZfuzpbZ8Mo4").GetAwaiter().GetResult();
+            Console.WriteLine($"Token:{token}");
+            var actors = new Actors(token).GetActors().GetAwaiter().GetResult();
+            foreach (var actor in actors)
+            {
+                Console.WriteLine(actor.Id + " " + actor.Name + " " + actor.Birthday);
+            }
+            Console.WriteLine(actors);
+            //
+            //
             Console.ReadKey();
 
-            // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app! 
         }
     }
 }
