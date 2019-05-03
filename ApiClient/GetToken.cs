@@ -21,7 +21,7 @@ namespace ApiClient
             HttpClient client = new HttpClient();
             var byteArray = Encoding.ASCII.GetBytes(username + ":" + password);
 
-            client.BaseAddress = new Uri("https://34.240.190.150/api/api-token-auth/");
+            client.BaseAddress = new Uri("https://34.240.190.150/api/");
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
@@ -38,7 +38,7 @@ namespace ApiClient
             try
             {
                 HttpResponseMessage response = await
-                    client.PostAsync("https://34.240.190.150/api/api-token-auth/", content);
+                    client.PostAsync("api-token-auth/", content);
 
                 response.EnsureSuccessStatusCode();
                 string token = null;
