@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net.Http.Formatting;
-using System.Net;
 
 namespace ApiClient
 {
-    public class Actor
+    public class Director
     {
         public int id { get; set; }
         public string name { get; set; }
@@ -19,12 +18,12 @@ namespace ApiClient
         public string birthday { get; set; }
         public HttpClient Client { get; set; }
 
-        public Actor()
+        public Director()
         {
 
         }
 
-        public Actor(string token)
+        public Director(string token)
         {
 
             Client = new HttpClient();
@@ -35,80 +34,80 @@ namespace ApiClient
         }
 
 
-        public async Task<List<Actor>> GetActorsAsync()
+        public async Task<List<Director>> GetDirectorsAsync()
         {
-            string actors = null;
-            HttpResponseMessage response = await Client.GetAsync("actors//");
+            string directors = null;
+            HttpResponseMessage response = await Client.GetAsync("directors//");
             if (response.IsSuccessStatusCode)
             {
-                actors = await response.Content.ReadAsStringAsync();
+                directors = await response.Content.ReadAsStringAsync();
             }
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Actor>>(actors);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<Director>>(directors);
         }
 
 
-        public async Task<string> GetActorAsync(int id)
+        public async Task<string> GetDirectorAsync(int id)
         {
-            string actor = null;
-            HttpResponseMessage response = await Client.GetAsync("actors//" + id + "//");
+            string director = null;
+            HttpResponseMessage response = await Client.GetAsync("directors//" + id + "//");
             if (response.IsSuccessStatusCode)
             {
-                actor = await response.Content.ReadAsStringAsync();
+                director = await response.Content.ReadAsStringAsync();
             }
 
-            if (actor != null)
+            if (director != null)
             {
-                Actor desirializedActor = Newtonsoft.Json.JsonConvert.DeserializeObject<Actor>(actor);
-                return desirializedActor.id + " " + desirializedActor.name + " " + desirializedActor.birthday;
+                Director desirializedDirector = Newtonsoft.Json.JsonConvert.DeserializeObject<Director>(director);
+                return desirializedDirector.id + " " + desirializedDirector.name + " " + desirializedDirector.birthday;
             }
 
             return "Bad request";
         }
 
 
-        public async Task<HttpStatusCode> CreateActorAsync(Actor actor)
+        public async Task<HttpStatusCode> CreateDirectorAsync(Director director)
         {
-            Actor newActor = new Actor()
+            Director newDirector = new Director()
             {
-                name = actor.name,
-                birthday = actor.birthday
+                name = director.name,
+                birthday = director.birthday
             };
 
             HttpResponseMessage response = await
-                Client.PostAsJsonAsync("actors//", newActor);
+                Client.PostAsJsonAsync("directors//", newDirector);
             response.EnsureSuccessStatusCode();
 
             return response.StatusCode;
         }
 
 
-        public async Task<string> UpdateActorAsync(Actor actor)
+        public async Task<string> UpdateDirectorAsync(Director director)
         {
             try
             {
                 HttpResponseMessage response = await Client.PutAsJsonAsync(
-                    "actors//" + actor.id + "//", actor);
+                    "directors//" + director.id + "//", director);
                 response.EnsureSuccessStatusCode();
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return $"Actor {actor.name} updated";
+                    return $"Actor {director.name} updated";
                 }
 
                 return "Bad request";
 
             }
-            catch(HttpRequestException e)
+            catch (HttpRequestException e)
             {
                 return e.Message.ToString();
             }
         }
 
 
-        public async Task<HttpStatusCode> DeleteActorAsync(int id)
+        public async Task<HttpStatusCode> DeleteDirectorAsync(int id)
         {
             HttpResponseMessage response = await Client.DeleteAsync(
-                "actors//" + id + "//");
+                "directors//" + id + "//");
             return response.StatusCode;
         }
     }
